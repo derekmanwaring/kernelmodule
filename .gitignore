@@ -1,0 +1,11 @@
+*.o
+*.mod.*
+*.order
+*.ko
+*.txt
+*.inc
+*.cmd
+nbproject
+*.symvers
+*.tmp*
+*.swp
