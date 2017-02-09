@@ -2,8 +2,8 @@
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="/home/seed/NetBeansProjects/KernelModule" name="0">
-      <in>hello.c</in>
-      <in>hello.mod.c</in>
+      <in>firewall.c</in>
+      <in>firewall.mod.c</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -57,7 +57,7 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="/home/seed/NetBeansProjects/KernelModule/hello.c"
+      <item path="/home/seed/NetBeansProjects/KernelModule/firewall.c"
             ex="false"
             tool="0"
             flavor2="2">
@@ -72,7 +72,7 @@
           </incDir>
         </cTool>
       </item>
-      <item path="/home/seed/NetBeansProjects/KernelModule/hello.mod.c"
+      <item path="/home/seed/NetBeansProjects/KernelModule/firewall.mod.c"
             ex="false"
             tool="0"
             flavor2="2">
