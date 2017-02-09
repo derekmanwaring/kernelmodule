@@ -48,6 +48,7 @@
             </incDir>
             <preprocessorList>
               <Elem>CONFIG_NETFILTER</Elem>
+              <Elem>__KERNEL__</Elem>
             </preprocessorList>
           </cTool>
         </makeTool>
