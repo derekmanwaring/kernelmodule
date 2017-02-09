@@ -5,7 +5,7 @@
 *.txt
 *.inc
 *.cmd
-nbproject
 *.symvers
 *.tmp*
 *.swp
+private

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="/home/seed/NetBeansProjects/KernelModule" name="0">
+      <in>hello.c</in>
+      <in>hello.mod.c</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>/home/seed/NetBeansProjects/KernelModule/Makefile</itemPath>
+      <itemPath>/home/seed/NetBeansProjects/KernelModule/nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>/home/seed/NetBeansProjects/KernelModule</Elem>
+  </sourceRootList>
+  <projectmakefile>/home/seed/NetBeansProjects/KernelModule/Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0"
+                 commonFlags="-m64 -mtune=generic -march=x86-64 -g -O2 -std=gnu90 -fstack-protector-strong"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>/home/seed/NetBeansProjects/KernelModule</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <standard>3</standard>
+            <incDir>
+              <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include</pElem>
+              <pElem>/usr/src/linux-headers-4.6.0-kali1-common/arch/x86/include</pElem>
+              <pElem>/usr/src/linux-headers-4.6.0-kali1-amd64/arch/x86/include</pElem>
+              <pElem>/usr/src/linux-headers-4.6.0-kali1-amd64/include</pElem>
+              <pElem>/usr/src/linux-headers-4.6.0-kali1-amd64/arch/x86/include/generated</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>CONFIG_NETFILTER</Elem>
+            </preprocessorList>
+          </cTool>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="/home/seed/NetBeansProjects/KernelModule/hello.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi/asm-generic</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi/linux</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/xen</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-amd64</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="/home/seed/NetBeansProjects/KernelModule/hello.mod.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool flags="0">
+          <incDir>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi/asm-generic</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi/linux</pElem>
+            <pElem>.</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/xen</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-common/include/uapi</pElem>
+            <pElem>/usr/src/linux-headers-4.6.0-kali1-amd64</pElem>
+          </incDir>
+        </cTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
