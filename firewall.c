@@ -30,10 +30,44 @@ int matches_rule(const struct iphdr * iph,
     return false;
 }
 
+void log_packet_info(const struct iphdr* iph, const unsigned char* transport_header){
+    const char * proto;
+
+    switch (iph->protocol) {
+        case IPPROTO_TCP:
+            proto = "TCP";
+            break;
+        case IPPROTO_UDP:
+            proto = "UDP";
+            break;
+        case IPPROTO_ICMP:
+            proto = "ICMP";
+            break;
+        default:
+            proto = "IP";
+            break;
+    }
+
+    if (iph->protocol == IPPROTO_TCP || iph->protocol == IPPROTO_UDP) {
+        struct tcphdr * tcph = (struct tcphdr *) transport_header;
+
+        printk(KERN_INFO "Checking %s packet %pI4:%hu->%pI4:%hu against whitelist.\n",
+                proto,
+                &iph->saddr, ntohs(tcph->source),
+                &iph->daddr, ntohs(tcph->dest));
+    } else {
+        printk(KERN_INFO "Checking %s packet %pI4->%pI4 against whitelist.\n",
+                proto, &iph->saddr, &iph->daddr);
+    }
+}
+
 int matches_whitelist(const struct iphdr * iph,
         const unsigned char * transport_header) {
     size_t i;
     size_t whitelist_size = sizeof(whitelist) / sizeof(whitelist_rule);
+
+    log_packet_info(iph, transport_header);
+
     for (i = 0; i < whitelist_size; i++){
         if (matches_rule(iph, transport_header, whitelist[i])) {
             return true;
