@@ -1,33 +1,78 @@
 #include <linux/in.h>
-
 #include <linux/ip.h>
 #include <linux/module.h>
 #include <linux/netfilter.h>
 #include <linux/netfilter_ipv4.h>
+#include <linux/tcp.h>
+
+uint32_t ip_addr_from_string(const char * string_addr) {
+    uint8_t octets[4];
+    sscanf(string_addr, "%hhu.%hhu.%hhu.%hhu",
+            &octets[0], &octets[1], &octets[2], &octets[3]);
+    return *((int *)octets);
+}
+
+int protocol_uses_ports(uint8_t protocol) {
+    return protocol == IPPROTO_TCP || protocol == IPPROTO_UDP;
+}
 
 /**
  * Default to drop. A whitelist rule allows matched packets.
+ *
+ * 0 for port-oriented protocols serves as a wildcard.
  */
 struct firewall_whitelist_rule {
     const char * const source_ip;
-    const u_int16_t source_port;
+    const uint16_t source_port;
     const char * const dest_ip;
-    const u_int16_t dest_port;
-    const u_int8_t protocol;
+    const uint16_t dest_port;
+    const uint8_t protocol;
 };
 
 typedef struct firewall_whitelist_rule whitelist_rule;
 
-whitelist_rule whitelist[1] = {
-    { "192.168.1.9", 0, "192.168.1.8", 0, IPPROTO_ICMP }
+whitelist_rule whitelist[6] = {
+    { "192.168.1.8", 0, "192.168.1.9", 0, IPPROTO_ICMP },
+    { "192.168.1.9", 0, "192.168.1.8", 0, IPPROTO_ICMP },
+    { "192.168.1.8", 0, "192.168.1.9", 22, IPPROTO_TCP },
+    { "192.168.1.9", 22, "192.168.1.8", 0, IPPROTO_TCP },
+    { "192.168.1.8", 0, "128.230.18.198", 443, IPPROTO_TCP },
+    { "128.230.18.198", 443, "192.168.1.8", 0, IPPROTO_TCP }
 };
 
 int matches_rule(const struct iphdr * iph,
         const unsigned char * transport_header,
         whitelist_rule rule) {
     // First check source and destination address
+    if (iph->saddr != ip_addr_from_string(rule.source_ip)) {
+        return false;
+    }
 
-    return false;
+    if (iph->daddr != ip_addr_from_string(rule.dest_ip)) {
+        return false;
+    }
+
+    // Check protocol
+    if (iph->protocol != rule.protocol) {
+        return false;
+    }
+
+    // Check ports if port-oriented protocol
+    if (protocol_uses_ports(iph->protocol)) {
+        struct tcphdr * tcph = (struct tcphdr *) transport_header;
+
+        // 0 is wildcard port
+        if (rule.source_port != 0 && ntohs(tcph->source) != rule.source_port) {
+            return false;
+        }
+
+        if (rule.dest_port != 0 && ntohs(tcph->dest) != rule.dest_port) {
+            return false;
+        }
+    }
+
+    // All checks passed
+    return true;
 }
 
 void log_packet_info(const struct iphdr* iph, const unsigned char* transport_header){
@@ -48,7 +93,7 @@ void log_packet_info(const struct iphdr* iph, const unsigned char* transport_hea
             break;
     }
 
-    if (iph->protocol == IPPROTO_TCP || iph->protocol == IPPROTO_UDP) {
+    if (protocol_uses_ports(iph->protocol)) {
         struct tcphdr * tcph = (struct tcphdr *) transport_header;
 
         printk(KERN_INFO "Checking %s packet %pI4:%hu->%pI4:%hu against whitelist.\n",
